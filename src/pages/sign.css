@@ -1,0 +1,64 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+@media screen and (orientation: portrait) {
+
+  .hint {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    background-color: #aaa;
+  }
+
+  .drawBlock {
+    display: none;
+  }
+}
+
+/* For landscape, we want the tool bar stick on the left */
+
+@media screen and (orientation: landscape) {
+  .SignaturePage {
+    background-color: #f0f0f0;
+    /* overflow: hidden; */
+  }
+
+  .hint {
+    display: none;
+  }
+
+  .drawBlock {
+    display: block;
+    position: relative;
+  }
+
+  .buttonBlock {
+    top: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  .pls {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #ccc;
+    font-size: 5rem;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#canvas {
+  display: none;
+}

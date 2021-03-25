@@ -1,0 +1,79 @@
+.center {
+  text-align: center;
+}
+
+.desc {
+
+}
+
+.grey {
+  color: #666;
+}
+
+.red {
+  color: #c00;
+}
+
+.blue {
+  color: #00c;
+}
+
+.img {
+  background: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.page1-img {
+  height: 30vh;
+  background-position: center bottom;
+}
+
+.page2-img {
+  height: 32vh;
+  background-position: center bottom;
+}
+
+thead td {
+  font-weight: bold;
+  text-align: center;
+  padding: 5px 0;
+}
+
+.page-3-title {
+  color: #fff;
+  background-color: #f1933b;
+}
+
+.page-3-title2 {
+  color: #fff;
+  background-color: #c77529;
+}
+
+td {
+  padding: 10px;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  vertical-align: text-top;
+}
+
+.gold {
+  color: #b49c23;
+}
+
+.page4-img {
+  height: 50vh;
+  background-position: center bottom;
+}
+
+.page5-img {
+  height: 60vh;
+  /* border: 1px solid red; */
+  background-size: 70%;
+  background-position: center bottom;
+}
+
+.page6-img {
+  height: 25vh;
+  background-position: center bottom;
+}
