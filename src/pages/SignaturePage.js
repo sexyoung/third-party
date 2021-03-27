@@ -5,6 +5,7 @@ import './sign.css';
 // import SignaturePad from "signature_pad";
 
 export const SignaturePage = () => {
+  const [isMailing, setIsMailing] = useState(false);
   const [isMailed, setIsMailed] = useState(false);
   const [isSigned, setIsSigned] = useState(false);
   const [props, setProps] = useState({width: 50, height: 50});
@@ -81,6 +82,7 @@ export const SignaturePage = () => {
 
         // Let's upload the file
         // Don't set contentType manually → https://github.com/github/fetch/issues/505#issuecomment-293064470
+        setIsMailing(true);
         const API_URL = `${process.env.REACT_APP_MAIL_SERVER}/upload`;
         fetch(API_URL, {method: 'POST', body: fd})
           .then(res => res.json()) 
@@ -163,7 +165,7 @@ export const SignaturePage = () => {
                 <option value="2">之2</option>
                 <option value="3">之3</option>
               </select>
-              <button>送出</button>
+              <button disabled={isMailing}>送出</button>
             </form>
           )}
           <canvas id="canvas" width="1762" height="928" />
