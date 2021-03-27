@@ -26,18 +26,14 @@ function App() {
             <SignaturePage />
           </Route>
           <Route path="/">
-          <Fullpage>
-            <FullPageSections>
-              <FullpageSection style={{padding: '.5rem',}}><Page1 /></FullpageSection>
-              <FullpageSection style={{padding: '.5rem',}}><Page2 /></FullpageSection>
-              <FullpageSection style={{padding: '.5rem',}}><Page3 /></FullpageSection>
-              <FullpageSection style={{padding: '.5rem',}}><Page4 /></FullpageSection>
-              <FullpageSection style={{backgroundColor: '#fff', padding: '.5rem',}}><Page5 /></FullpageSection>
-              <FullpageSection style={{padding: '.5rem',}}><Page6 /></FullpageSection>
-              <FullpageSection style={{padding: '.5rem',}}><Page7 /></FullpageSection>
-              <FullpageSection style={{padding: '.5rem',}}><Page8 /></FullpageSection>
-            </FullPageSections>
-          </Fullpage>
+              <div className="full-page"><Page1 /></div>
+              <div className="full-page"><Page2 /></div>
+              <div className="full-page"><Page3 /></div>
+              <div className="full-page"><Page4 /></div>
+              <div className="full-page"><Page5 /></div>
+              <div className="full-page"><Page6 /></div>
+              <div className="full-page"><Page7 /></div>
+              <div className="full-page"><Page8 /></div>
           </Route>
         </Switch>
       </HashRouter>

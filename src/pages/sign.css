@@ -1,4 +1,4 @@
-.App {
+.SignaturePage {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -33,7 +33,7 @@
 /* For landscape, we want the tool bar stick on the left */
 
 @media screen and (orientation: landscape) {
-  .SignaturePage {
+  .SignatureBlock {
     background-color: #f0f0f0;
     /* overflow: hidden; */
   }

@@ -108,70 +108,72 @@ export const SignaturePage = () => {
 
   return (
     <div className="SignaturePage">
-      {!isMailed && <>
-        <div className="hint">請把手機打橫進行簽名</div>
-          <div className={"drawBlock" + (isSigned ? ' hide': '')}>
-            <div className="buttonBlock">
-              <button className="buttonSubmit" onClick={handleEnd}>簽完</button>
-              <button className="buttonClear" onClick={handleClear}>重簽</button>
+      <div className="SignatureBlock">
+        {!isMailed && <>
+          <div className="hint">請把手機打橫進行簽名</div>
+            <div className={"drawBlock" + (isSigned ? ' hide': '')}>
+              <div className="buttonBlock">
+                <button className="buttonSubmit" onClick={handleEnd}>簽完</button>
+                <button className="buttonClear" onClick={handleClear}>重簽</button>
+              </div>
+              <div className="pls" id="pls">請簽名</div>
+              <SignatureCanvas
+                className="SignatureCanvas"
+                ref={DrawDOM}
+                minWidth={4}
+                maxWidth={5}
+                onBegin={() => { document.getElementById('pls').style.display = 'none'; }}
+                canvasProps={{...props, className: 'sigCanvas'}}
+              />
             </div>
-            <div className="pls" id="pls">請簽名</div>
-            <SignatureCanvas
-              className="SignatureCanvas"
-              ref={DrawDOM}
-              minWidth={4}
-              maxWidth={5}
-              onBegin={() => { document.getElementById('pls').style.display = 'none'; }}
-              canvasProps={{...props, className: 'sigCanvas'}}
-            />
+          {isSigned && (
+            <form className="form" onSubmit={handleSubmit}>
+              <h1>您的地址是：</h1>
+              <select name="no" ref={noDOM}>
+                <option value="1">1號</option>
+                <option value="3">3號</option>
+                <option value="5">5號</option>
+                <option value="7">7號</option>
+                <option value="9">9號</option>
+                <option value="11">11號</option>
+                <option value="13">13號</option>
+                <option value="15">15號</option>
+                <option value="17">17號</option>
+              </select>
+              <select name="floor" ref={floorDOM}>
+                <option value="1">1樓</option>
+                <option value="2">2樓</option>
+                <option value="3">3樓</option>
+                <option value="4">4樓</option>
+                <option value="5">5樓</option>
+                <option value="6">6樓</option>
+                <option value="7">7樓</option>
+                <option value="8">8樓</option>
+                <option value="9">9樓</option>
+                <option value="10">10樓</option>
+                <option value="11">11樓</option>
+                <option value="12">12樓</option>
+                <option value="13">13樓</option>
+                <option value="14">14樓</option>
+                <option value="15">15樓</option>
+              </select>
+              <select name="of" ref={ofDOM}>
+                <option value="">本號</option>
+                <option value="1">之1</option>
+                <option value="2">之2</option>
+                <option value="3">之3</option>
+              </select>
+              <button>送出</button>
+            </form>
+          )}
+          <canvas id="canvas" width="1762" height="928" />
+        </>}
+        {isMailed && (
+          <div>
+            已連署完成，謝謝您的參與！
           </div>
-        {isSigned && (
-          <form className="form" onSubmit={handleSubmit}>
-            <h1>您的地址是：</h1>
-            <select name="no" ref={noDOM}>
-              <option value="1">1號</option>
-              <option value="3">3號</option>
-              <option value="5">5號</option>
-              <option value="7">7號</option>
-              <option value="9">9號</option>
-              <option value="11">11號</option>
-              <option value="13">13號</option>
-              <option value="15">15號</option>
-              <option value="17">17號</option>
-            </select>
-            <select name="floor" ref={floorDOM}>
-              <option value="1">1樓</option>
-              <option value="2">2樓</option>
-              <option value="3">3樓</option>
-              <option value="4">4樓</option>
-              <option value="5">5樓</option>
-              <option value="6">6樓</option>
-              <option value="7">7樓</option>
-              <option value="8">8樓</option>
-              <option value="9">9樓</option>
-              <option value="10">10樓</option>
-              <option value="11">11樓</option>
-              <option value="12">12樓</option>
-              <option value="13">13樓</option>
-              <option value="14">14樓</option>
-              <option value="15">15樓</option>
-            </select>
-            <select name="of" ref={ofDOM}>
-              <option value="">本號</option>
-              <option value="1">之1</option>
-              <option value="2">之2</option>
-              <option value="3">之3</option>
-            </select>
-            <button>送出</button>
-          </form>
         )}
-        <canvas id="canvas" width="1762" height="928" />
-      </>}
-      {isMailed && (
-        <div>
-          已連署完成，謝謝您的參與！
-        </div>
-      )}
+      </div>
     </div>
   )
 }
