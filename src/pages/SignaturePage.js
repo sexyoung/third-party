@@ -4,15 +4,23 @@ import paper from './images/paper.png'; // 1478 x 1108
 import './sign.css';
 // import SignaturePad from "signature_pad";
 
+import { No } from "./No";
+import { Of } from "./Of";
+import { Floor } from "./Floor";
+
 export const SignaturePage = () => {
+  const [street, setStreet] = useState('');
+  const [no, setNo] = useState('');
+  const [of, setOf] = useState('');
+  const [floor, setFloor] = useState('');
   const [isMailing, setIsMailing] = useState(false);
   const [isMailed, setIsMailed] = useState(false);
   const [isSigned, setIsSigned] = useState(false);
   const [props, setProps] = useState({width: 50, height: 50});
   const DrawDOM = useRef(null);
-  const noDOM = useRef(null);
-  const floorDOM = useRef(null);
-  const ofDOM = useRef(null);
+  // const noDOM = useRef(null);
+  // const floorDOM = useRef(null);
+  // const ofDOM = useRef(null);
   useEffect(() => {
     window.addEventListener('resize', () => {
       setProps({
@@ -39,7 +47,12 @@ export const SignaturePage = () => {
     document.location.reload();
   }
 
-  const generatePaper = (no, floor, of) => {
+  const generatePaper = (obj) => {
+    // console.log(obj.street);
+    const streetName = obj.street.slice(0, 2);
+    const streetType = obj.street.slice(2, 3);
+    const lane = obj.street.slice(3, 6);
+    const alley = obj.street.slice(7, 9);
     const ctx = document.getElementById('canvas').getContext('2d');
     var img = new Image();
     img.onload = function(){
@@ -49,9 +62,21 @@ export const SignaturePage = () => {
       ctx.font='40px Arial';
 
       // address
-      ctx.fillText(no, 825 + 200, 165);
-      ctx.fillText(floor, 945 + 200, 165);
-      ctx.fillText(of, 1090 + 200, 165);
+      ctx.fillText(streetName, 480, 165);
+
+      ctx.beginPath();
+      ctx.lineWidth = 5;
+      if(streetType === '路')
+        ctx.arc(617, 155, 30, 0, 2 * Math.PI);
+      else
+        ctx.arc(672, 155, 30, 0, 2 * Math.PI);
+      ctx.stroke();
+      
+      ctx.fillText(lane, 730, 165);
+      ctx.fillText(alley, 900, 165);
+      ctx.fillText(no, 825 + 190, 165);
+      floor && ctx.fillText(floor, 945 + 200, 165);
+      of && ctx.fillText(of, 1090 + 200, 165);
 
       const date = new Date();
       // date
@@ -60,7 +85,7 @@ export const SignaturePage = () => {
       ctx.fillText(date.getDate(), 936, 886);
 
       const ctx2 = document.getElementById('canvas');
-      post2DB({ no, floor, of, base64: ctx2.toDataURL()});
+      post2DB({ street: obj.street, no, floor, of, base64: ctx2.toDataURL()});
 
       // eslint-disable-next-line no-use-before-define
       // const win = window.open();
@@ -69,15 +94,14 @@ export const SignaturePage = () => {
     img.src = DrawDOM.current.toDataURL();
   }
 
-  const post2DB = ({ no, floor, of, base64 }) => {
+  const post2DB = ({ street, no, floor, of, base64 }) => {
+    const title = (`${street}${no}號${floor}樓${of ? `之${of}`: ''}`);
     fetch(base64)
       .then(res => res.blob())
       .then(blob => {
         const fd = new FormData();
-        const file = new File([blob], `${no}號${floor}樓${of ? `之${of}`: ''}連署書.png`);
-        fd.append('no', no);
-        fd.append('of', of);
-        fd.append('floor', floor);
+        const file = new File([blob], `${street}${no}號${floor}樓${of ? `之${of}`: ''}連署書.png`);
+        fd.append('title', title);
         fd.append('image', file);
 
         // Let's upload the file
@@ -101,11 +125,26 @@ export const SignaturePage = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    generatePaper(
-      noDOM.current.value,
-      floorDOM.current.value,
-      ofDOM.current.value,
-    );
+    var obj = {};
+    var formData = new FormData(e.target);
+    for (var key of formData.keys()) {
+      if(formData.get(key)) {
+        obj[key] = formData.get(key);
+      }
+    }
+    generatePaper(obj);
+  }
+
+  const handleNo = (no) => {
+    setNo(no);
+    setOf('');
+  }
+
+  const handleAddress = (e) => {
+    setStreet(e.target.value);
+    setNo('');
+    setFloor('');
+    setOf('');
   }
 
   return (
@@ -131,40 +170,15 @@ export const SignaturePage = () => {
           {isSigned && (
             <form className="form" onSubmit={handleSubmit}>
               <h1>您的地址是：</h1>
-              <select name="no" ref={noDOM}>
-                <option value="1">1號</option>
-                <option value="3">3號</option>
-                <option value="5">5號</option>
-                <option value="7">7號</option>
-                <option value="9">9號</option>
-                <option value="11">11號</option>
-                <option value="13">13號</option>
-                <option value="15">15號</option>
-                <option value="17">17號</option>
+              <select name="street" value={street} onChange={handleAddress}>
+                <option value="">請選擇</option>
+                <option value="康樂街136巷30弄">康樂街136巷30弄</option>
+                <option value="康樂街136巷29弄">康樂街136巷29弄</option>
+                <option value="東湖路113巷">東湖路113巷</option>
               </select>
-              <select name="floor" ref={floorDOM}>
-                <option value="1">1樓</option>
-                <option value="2">2樓</option>
-                <option value="3">3樓</option>
-                <option value="4">4樓</option>
-                <option value="5">5樓</option>
-                <option value="6">6樓</option>
-                <option value="7">7樓</option>
-                <option value="8">8樓</option>
-                <option value="9">9樓</option>
-                <option value="10">10樓</option>
-                <option value="11">11樓</option>
-                <option value="12">12樓</option>
-                <option value="13">13樓</option>
-                <option value="14">14樓</option>
-                <option value="15">15樓</option>
-              </select>
-              <select name="of" ref={ofDOM}>
-                <option value="">本號</option>
-                <option value="1">之1</option>
-                <option value="2">之2</option>
-                <option value="3">之3</option>
-              </select>
+              {!!street && <No {...{ no, handleNo, street }} />}
+              {street === '康樂街136巷30弄' && !!no && <Floor {...{no, floor, setFloor}} />}
+              {!!street && !!no && <Of {...{street, no, of, setOf}} />}
               <button disabled={isMailing}>送出</button>
             </form>
           )}

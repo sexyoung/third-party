@@ -5,7 +5,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Fullpage, { FullPageSections, FullpageSection } from '@ap.cx/react-fullpage';
 
 import { Page1 } from "./pages/Page1";
 import { Page2 } from "./pages/Page2";
