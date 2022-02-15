@@ -31,7 +31,7 @@ function App() {
               <div className="full-page"><Page4 /></div>
               <div className="full-page"><Page5 /></div>
               <div className="full-page"><Page6 /></div>
-              <div className="full-page"><Page7 /></div>
+              {/* <div className="full-page"><Page7 /></div> */}
               <div className="full-page"><Page8 /></div>
           </Route>
         </Switch>

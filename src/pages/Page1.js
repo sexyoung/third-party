@@ -8,7 +8,7 @@ import door from './images/door.png';
 export const Page1 = () => {
   return (
     <div>
-      <h1 className="center">為何要第三方複驗？</h1>
+      <h1 className="center">為何要第公正驗收？</h1>
       <div className="center grey">
         <strong>
           因住戶入住不斷發現<span className="red">公設問題</span>，如
